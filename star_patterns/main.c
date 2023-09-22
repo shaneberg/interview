@@ -27,7 +27,6 @@ void hollow_square_pattern_for_char(const char character, const size_t size) {
     for (size_t i = 0; i < size; i++) {
         bool is_border = (i == 0 || i == size - 1);
         char c = is_border ? character : ' ';
-
         char* spaces = generate_n_chars(c, space_count);
         if (spaces) {
             printf("%c%s%c\n", left_boundary, spaces, right_boundary);
