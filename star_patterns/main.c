@@ -17,6 +17,98 @@ char* generate_n_chars(const char character, const size_t count) {
     return str;
 }
 
+void hollow_pyramid_pattern_for_char(const char character, const size_t size) {
+
+    printf("== Hollow Pyramid Pattern %zu ==\n", size);
+    for (size_t i = 0; i < size; i++) {
+        const size_t mark_count = (i * 2) + 1;
+        const size_t space_count = size - i;
+
+        const size_t inner_space_count = mark_count - MIN(2, mark_count);
+        const char inner_spaces_mark = (i == 0 || i == size - 1) ? character : ' ';
+
+        const char right_mark = mark_count > 2 ? character : '\0';
+
+        char* spaces = generate_n_chars(' ', space_count);
+        char* inner_spaces = generate_n_chars(inner_spaces_mark, mark_count - MIN(2, mark_count));
+
+        if (spaces && inner_spaces) {
+            printf("%s%c%s%c\n", spaces, character, inner_spaces, right_mark);
+        }
+
+        if (spaces) {
+            free(spaces);
+        }
+
+        if (inner_spaces) {
+            free(inner_spaces);
+        }
+    }
+
+    printf("=======================\n");
+}
+
+void hollow_pyramid_pattern(const size_t size) {
+    return hollow_pyramid_pattern_for_char('*', size);
+}
+
+void reverse_pyramid_pattern_for_char(const char character, const size_t size) {
+    printf("== Reverse Pyramid Pattern %zu ==\n", size);
+    for (size_t i = 0; i < size; i++) {
+        const size_t mark_count = (size * 2) - ((i * 2) + 1);
+        const size_t space_count = i;
+
+        char* marks = generate_n_chars(character, mark_count);
+        char* spaces = generate_n_chars(' ', space_count);
+
+        if (marks && spaces) {
+            printf("%s%s\n", spaces, marks);
+        }
+
+        if (marks) {
+            free(marks);
+        }
+
+        if (spaces) {
+            free(spaces);
+        }
+    }
+
+    printf("===========================\n");
+}
+
+void reverse_pyramid_pattern(const size_t size) {
+    return reverse_pyramid_pattern_for_char('*', size);
+}
+
+void pyramid_pattern_for_char(const char character, const size_t size) {
+    printf("== Pyramid Pattern %zu ==\n", size);
+    for (size_t i = 0; i < size; i++) {
+        const size_t mark_count = (i * 2) + 1;
+        const size_t space_count = size - (i + 1);
+        char* spaces = generate_n_chars(' ', space_count);
+        char* marks = generate_n_chars(character, mark_count);
+
+        if (spaces && marks) {
+            printf("%s%s\n", spaces, marks);
+        }
+
+        if (spaces) {
+            free(spaces);
+        }
+
+        if (marks) {
+            free(marks);
+        }
+    }
+
+    printf("====================\n");
+}
+
+void pyramid_pattern(const size_t size) {
+    return pyramid_pattern_for_char('*', size);
+}
+
 void hollow_triangle_pattern_for_char(const char character, const size_t size) {
     printf("== Hollow Triangle Pattern %zu ==\n", size);
     for (size_t i = 0; i < size; i++) {
@@ -187,5 +279,38 @@ int main() {
     hollow_triangle_pattern(8);
     hollow_triangle_pattern(9);
     hollow_triangle_pattern(10);
+    pyramid_pattern(0);
+    pyramid_pattern(1);
+    pyramid_pattern(2);
+    pyramid_pattern(3);
+    pyramid_pattern(4);
+    pyramid_pattern(5);
+    pyramid_pattern(6);
+    pyramid_pattern(7);
+    pyramid_pattern(8);
+    pyramid_pattern(9);
+    pyramid_pattern(10);
+    reverse_pyramid_pattern(0);
+    reverse_pyramid_pattern(1);
+    reverse_pyramid_pattern(2);
+    reverse_pyramid_pattern(3);
+    reverse_pyramid_pattern(4);
+    reverse_pyramid_pattern(5);
+    reverse_pyramid_pattern(6);
+    reverse_pyramid_pattern(7);
+    reverse_pyramid_pattern(8);
+    reverse_pyramid_pattern(9);
+    reverse_pyramid_pattern(10);
+    hollow_pyramid_pattern(0);
+    hollow_pyramid_pattern(1);
+    hollow_pyramid_pattern(2);
+    hollow_pyramid_pattern(3);
+    hollow_pyramid_pattern(4);
+    hollow_pyramid_pattern(5);
+    hollow_pyramid_pattern(6);
+    hollow_pyramid_pattern(7);
+    hollow_pyramid_pattern(8);
+    hollow_pyramid_pattern(9);
+    hollow_pyramid_pattern(10);
     return 0;
 }
