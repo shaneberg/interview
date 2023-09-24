@@ -17,6 +17,123 @@ char* generate_n_chars(const char character, const size_t count) {
     return str;
 }
 
+void square_pattern_for_char(const char character, const size_t size) {
+    printf("== Square Pattern %zu ==\n", size);
+
+    for (size_t i = 0; i < size; i++) {
+        char* str = generate_n_chars(character, size);
+        if(str) {
+            printf("%s\n", str);
+            free(str);
+        }
+    }
+
+    printf("========================\n");
+}
+
+void square_pattern(const size_t size) {
+    return square_pattern_for_char('*', size);
+}
+
+void hollow_square_pattern_for_char(const char character, const size_t size) {
+    printf("== Hollow Square Pattern %zu ==\n", size);
+
+    const char left_boundary = character;
+    const char right_boundary = size > 1 ? character : '\0';
+    const size_t space_count = size - MIN(2, size);
+
+    for (size_t i = 0; i < size; i++) {
+        const bool is_border = (i == 0 || i == size - 1);
+        const char c = is_border ? character : ' ';
+        char* spaces = generate_n_chars(c, space_count);
+        if (spaces) {
+            printf("%c%s%c\n", left_boundary, spaces, right_boundary);
+            free(spaces);
+        }
+    }
+
+    printf("===============================\n");
+}
+
+void hollow_square_pattern(const size_t size) {
+    return hollow_square_pattern_for_char('*', size);
+}
+
+void right_triangle_pattern_for_char(const char character, const size_t size) {
+    printf("== Right Triangle Pattern %zu ==\n", size);
+    for (size_t i = 0; i < size; i++) {
+        const size_t mark_count = i + 1;
+        const size_t space_count = size - mark_count;
+
+        char* spaces = generate_n_chars(' ', space_count);
+        char* marks = generate_n_chars(character, mark_count);
+
+        if (spaces && marks) {
+            printf("%s%s\n", spaces, marks);
+        }
+
+        if (spaces) {
+            free(spaces);
+        }
+
+        if (marks) {
+            free(marks);
+        }
+    }
+
+    printf("================================\n");
+}
+
+void right_triangle_pattern(const size_t size) {
+    return right_triangle_pattern_for_char('*', size);
+}
+
+void left_triangle_pattern_for_char(const char character, const size_t size) {
+    printf("== Left Triangle Pattern %zu ==\n", size);
+    for (size_t i = 0; i < size; i++) {
+        char* marks = generate_n_chars(character, i + 1);
+        if (marks) {
+            printf("%s\n", marks);
+            free(marks);
+        }
+    }
+
+    printf("=============================\n");
+}
+
+void left_triangle_pattern(const size_t size) {
+    return left_triangle_pattern_for_char('*', size);
+}
+
+void reverse_pyramid_pattern_for_char(const char character, const size_t size) {
+    printf("== Reverse Pyramid Pattern %zu ==\n", size);
+    for (size_t i = 0; i < size; i++) {
+        const size_t mark_count = (size * 2) - ((i * 2) + 1);
+        const size_t space_count = i;
+
+        char* marks = generate_n_chars(character, mark_count);
+        char* spaces = generate_n_chars(' ', space_count);
+
+        if (marks && spaces) {
+            printf("%s%s\n", spaces, marks);
+        }
+
+        if (marks) {
+            free(marks);
+        }
+
+        if (spaces) {
+            free(spaces);
+        }
+    }
+
+    printf("===========================\n");
+}
+
+void reverse_pyramid_pattern(const size_t size) {
+    return reverse_pyramid_pattern_for_char('*', size);
+}
+
 void hollow_pyramid_pattern_for_char(const char character, const size_t size) {
 
     printf("== Hollow Pyramid Pattern %zu ==\n", size);
@@ -52,33 +169,47 @@ void hollow_pyramid_pattern(const size_t size) {
     return hollow_pyramid_pattern_for_char('*', size);
 }
 
-void reverse_pyramid_pattern_for_char(const char character, const size_t size) {
-    printf("== Reverse Pyramid Pattern %zu ==\n", size);
+void downward_triangle_pattern_for_char(const char character, const size_t size) {
+    printf("== Downward Triangle Pattern %zu ==\n", size);
+
     for (size_t i = 0; i < size; i++) {
-        const size_t mark_count = (size * 2) - ((i * 2) + 1);
-        const size_t space_count = i;
-
-        char* marks = generate_n_chars(character, mark_count);
-        char* spaces = generate_n_chars(' ', space_count);
-
-        if (marks && spaces) {
-            printf("%s%s\n", spaces, marks);
-        }
-
+        char* marks = generate_n_chars(character, size - i);
         if (marks) {
+            printf("%s\n", marks);
             free(marks);
         }
+    }
 
+    printf("=============================\n");
+}
+
+void downward_triangle_pattern(const size_t size) {
+    return downward_triangle_pattern_for_char('*', size);
+}
+
+void hollow_triangle_pattern_for_char(const char character, const size_t size) {
+    printf("== Hollow Triangle Pattern %zu ==\n", size);
+    for (size_t i = 0; i < size; i++) {
+        const bool is_boundary = (i == 0) || (i == size - 1);
+
+        const size_t cur_width = i + 1;
+        const char right_boundary = cur_width > 1 ? character : '\0';
+
+        const size_t space_count = cur_width - MIN(2, cur_width);
+        const char space = is_boundary ? character : ' ';
+
+        char* spaces = generate_n_chars(space, space_count);
         if (spaces) {
+            printf("%c%s%c\n", character, spaces, right_boundary);
             free(spaces);
         }
     }
 
-    printf("===========================\n");
+    printf("=============================\n");
 }
 
-void reverse_pyramid_pattern(const size_t size) {
-    return reverse_pyramid_pattern_for_char('*', size);
+void hollow_triangle_pattern(const size_t size) {
+    return hollow_triangle_pattern_for_char('*', size);
 }
 
 void pyramid_pattern_for_char(const char character, const size_t size) {
@@ -107,137 +238,6 @@ void pyramid_pattern_for_char(const char character, const size_t size) {
 
 void pyramid_pattern(const size_t size) {
     return pyramid_pattern_for_char('*', size);
-}
-
-void hollow_triangle_pattern_for_char(const char character, const size_t size) {
-    printf("== Hollow Triangle Pattern %zu ==\n", size);
-    for (size_t i = 0; i < size; i++) {
-        const bool is_boundary = (i == 0) || (i == size - 1);
-
-        const size_t cur_width = i + 1;
-        const char right_boundary = cur_width > 1 ? character : '\0';
-
-        const size_t space_count = cur_width - MIN(2, cur_width);
-        const char space = is_boundary ? character : ' ';
-
-        char* spaces = generate_n_chars(space, space_count);
-        if (spaces) {
-            printf("%c%s%c\n", character, spaces, right_boundary);
-            free(spaces);
-        }
-    }
-
-    printf("=============================\n");
-}
-
-void hollow_triangle_pattern(const size_t size) {
-    return hollow_triangle_pattern_for_char('*', size);
-}
-
-void downward_triangle_pattern_for_char(const char character, size_t size) {
-    printf("== Downward Triangle Pattern %zu ==\n", size);
-
-    for (size_t i = 0; i < size; i++) {
-        char* marks = generate_n_chars(character, size - i);
-        if (marks) {
-            printf("%s\n", marks);
-            free(marks);
-        }
-    }
-
-    printf("=============================\n");
-}
-
-void downward_triangle_pattern(const size_t size) {
-    return downward_triangle_pattern_for_char('*', size);
-}
-
-void left_triangle_pattern_for_char(const char character, const size_t size) {
-    printf("== Left Triangle Pattern %zu ==\n", size);
-    for (size_t i = 0; i < size; i++) {
-        char* marks = generate_n_chars(character, i + 1);
-        if (marks) {
-            printf("%s\n", marks);
-            free(marks);
-        }
-    }
-
-    printf("=============================\n");
-}
-
-void left_triangle_pattern(const size_t size) {
-    return left_triangle_pattern_for_char('*', size);
-}
-
-void right_triangle_pattern_for_char(const char character, const size_t size) {
-    printf("== Right Triangle Pattern %zu ==\n", size);
-    for (size_t i = 0; i < size; i++) {
-        const size_t mark_count = i + 1;
-        const size_t space_count = size - mark_count;
-
-        char* spaces = generate_n_chars(' ', space_count);
-        char* marks = generate_n_chars(character, mark_count);
-
-        if (spaces && marks) {
-            printf("%s%s\n", spaces, marks);
-        }
-
-        if (spaces) {
-            free(spaces);
-        }
-
-        if (marks) {
-            free(marks);
-        }
-    }
-
-    printf("================================\n");
-}
-
-void right_triangle_pattern(size_t size) {
-    return right_triangle_pattern_for_char('*', size);
-}
-
-void hollow_square_pattern_for_char(const char character, size_t size) {
-    printf("== Hollow Square Pattern %zu ==\n", size);
-
-    const char left_boundary = character;
-    const char right_boundary = size > 1 ? character : '\0';
-    const size_t space_count = size - MIN(2, size);
-
-    for (size_t i = 0; i < size; i++) {
-        const bool is_border = (i == 0 || i == size - 1);
-        const char c = is_border ? character : ' ';
-        char* spaces = generate_n_chars(c, space_count);
-        if (spaces) {
-            printf("%c%s%c\n", left_boundary, spaces, right_boundary);
-            free(spaces);
-        }
-    }
-
-    printf("===============================\n");
-}
-
-void hollow_square_pattern(const size_t size) {
-    return hollow_square_pattern_for_char('*', size);
-}
-
-void square_pattern_for_char(const char character, const size_t size) {
-    printf("== Square Pattern %zu ==\n", size);
-
-    for (size_t i = 0; i < size; i++) {
-        char* str = generate_n_chars(character, size);
-        if(str) {
-            printf("%s\n", str);
-            free(str);
-        }
-    }
-
-    printf("========================\n");
-}
-
-void square_pattern(const size_t size) {
-    return square_pattern_for_char('*', size);
 }
 
 void diamond_pattern_for_char(const char character, const size_t size) {
