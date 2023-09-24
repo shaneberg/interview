@@ -240,6 +240,73 @@ void square_pattern(const size_t size) {
     return square_pattern_for_char('*', size);
 }
 
+void diamond_pattern_for_char(const char character, const size_t size) {
+    printf("== Diamond Pattern %zu ==\n", size);
+
+    const size_t total_size = size * 2 - MIN(1, size);
+
+    for (size_t i = 0; i < total_size; i++) {
+        const bool top = (i < size);
+        const size_t mark_count = top ? (i * 2) + 1 : ((size - 1) * 2) - ((i - size) * 2 + 1);
+        const size_t space_count = top ? size - MIN(size, (i + 1)) : (i - size) + 1;
+
+        char* spaces = generate_n_chars(' ', space_count);
+        char* marks = generate_n_chars(character, mark_count);
+
+        if (spaces && marks) {
+            printf("%s%s\n", spaces, marks);
+        }
+
+        if (spaces) {
+            free(spaces);
+        }
+
+        if (marks) {
+            free(marks);
+        }
+    }
+
+    printf("=================================\n");
+}
+
+void diamond_pattern(const size_t size) {
+    return diamond_pattern_for_char('*', size);
+}
+
+void hollow_diamond_pattern_for_char(const char character, const size_t size) {
+    printf("== Hollow Diamond Pattern %zu ==\n", size);
+
+    const size_t total_size = size * 2 - MIN(1, size);
+
+    for (size_t i = 0; i < total_size; i++) {
+        const bool top = (i < size);
+        const size_t space_count = top ? size - MIN(size, (i + 1)) : (i - size) + 1;
+        const size_t mark_count = top ? (i * 2) + 1 : ((size - 1) * 2) - ((i - size) * 2 + 1);
+        const size_t inner_space_count = mark_count - MIN(mark_count, 2);
+        const char right_boundary = (i == 0 || i == total_size - 1) ? '\0' : character;
+
+        char* spaces = generate_n_chars(' ', space_count);
+        char* inner_spaces = generate_n_chars(' ', inner_space_count);
+
+        if (spaces && inner_spaces) {
+            printf("%s%c%s%c\n", spaces, character, inner_spaces, right_boundary);
+        }
+
+        if (spaces) {
+            free(spaces);
+        }
+
+        if (inner_spaces) {
+            free(inner_spaces);
+        }
+    }
+    printf("=================================\n");
+}
+
+void hollow_diamond_pattern(const size_t size) {
+    return hollow_diamond_pattern_for_char('*', size);
+}
+
 int main() {
     square_pattern(0);
     square_pattern(1);
@@ -312,5 +379,27 @@ int main() {
     hollow_pyramid_pattern(8);
     hollow_pyramid_pattern(9);
     hollow_pyramid_pattern(10);
+    diamond_pattern(0);
+    diamond_pattern(1);
+    diamond_pattern(2);
+    diamond_pattern(3);
+    diamond_pattern(4);
+    diamond_pattern(5);
+    diamond_pattern(6);
+    diamond_pattern(7);
+    diamond_pattern(8);
+    diamond_pattern(9);
+    diamond_pattern(10);
+    hollow_diamond_pattern(0);
+    hollow_diamond_pattern(1);
+    hollow_diamond_pattern(2);
+    hollow_diamond_pattern(3);
+    hollow_diamond_pattern(4);
+    hollow_diamond_pattern(5);
+    hollow_diamond_pattern(6);
+    hollow_diamond_pattern(7);
+    hollow_diamond_pattern(8);
+    hollow_diamond_pattern(9);
+    hollow_diamond_pattern(10);
     return 0;
 }
