@@ -5,8 +5,38 @@
 #include <stdbool.h>
 
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define ARRAY_SIZE(x) (sizeof(x[0]) / sizeof(x))
 
-char* generate_n_chars(const char character, const size_t count) {
+#define BUFFER_SIZE 120
+
+const bool static_allocation = true;
+
+char g_buffer[BUFFER_SIZE];
+size_t g_pos = 0;
+
+void cleanup_chars(char* str) {
+    if (static_allocation) {
+        g_pos = 0;
+    } else if (str) {
+        free(str);
+    }
+}
+
+char* generate_n_chars_static(const char character, const size_t count) {
+    char* str = NULL;
+
+    if (count >= ARRAY_SIZE(g_buffer)) {
+        str = g_buffer + g_pos;
+        memset(str, character, count);
+        str[count] = '\0';
+        g_pos += count + 1;
+    }
+
+    return str;
+}
+
+char* generate_n_chars_dynamic(const char character, const size_t count) {
+
     char* str = malloc(sizeof(character) * (count + 1));
 
     if (str) {
@@ -17,6 +47,14 @@ char* generate_n_chars(const char character, const size_t count) {
     return str;
 }
 
+char* generate_n_chars(const char character, const size_t count) {
+    if (static_allocation) {
+        return generate_n_chars_static(character, count);
+    } else {
+        return generate_n_chars_dynamic(character, count);
+    }
+}
+
 void square_pattern_for_char(const char character, const size_t size) {
     printf("== Square Pattern %zu ==\n", size);
 
@@ -24,8 +62,9 @@ void square_pattern_for_char(const char character, const size_t size) {
         char* str = generate_n_chars(character, size);
         if(str) {
             printf("%s\n", str);
-            free(str);
         }
+
+        cleanup_chars(str);
     }
 
     printf("========================\n");
@@ -48,8 +87,9 @@ void hollow_square_pattern_for_char(const char character, const size_t size) {
         char* spaces = generate_n_chars(c, space_count);
         if (spaces) {
             printf("%c%s%c\n", left_boundary, spaces, right_boundary);
-            free(spaces);
         }
+
+        cleanup_chars(spaces);
     }
 
     printf("===============================\n");
@@ -72,13 +112,8 @@ void right_triangle_pattern_for_char(const char character, const size_t size) {
             printf("%s%s\n", spaces, marks);
         }
 
-        if (spaces) {
-            free(spaces);
-        }
-
-        if (marks) {
-            free(marks);
-        }
+        cleanup_chars(spaces);
+        cleanup_chars(marks);
     }
 
     printf("================================\n");
@@ -94,8 +129,9 @@ void left_triangle_pattern_for_char(const char character, const size_t size) {
         char* marks = generate_n_chars(character, i + 1);
         if (marks) {
             printf("%s\n", marks);
-            free(marks);
         }
+
+        cleanup_chars(marks);
     }
 
     printf("=============================\n");
@@ -118,13 +154,8 @@ void reverse_pyramid_pattern_for_char(const char character, const size_t size) {
             printf("%s%s\n", spaces, marks);
         }
 
-        if (marks) {
-            free(marks);
-        }
-
-        if (spaces) {
-            free(spaces);
-        }
+        cleanup_chars(marks);
+        cleanup_chars(spaces);
     }
 
     printf("===========================\n");
@@ -153,13 +184,8 @@ void hollow_pyramid_pattern_for_char(const char character, const size_t size) {
             printf("%s%c%s%c\n", spaces, character, inner_spaces, right_mark);
         }
 
-        if (spaces) {
-            free(spaces);
-        }
-
-        if (inner_spaces) {
-            free(inner_spaces);
-        }
+        cleanup_chars(spaces);
+        cleanup_chars(inner_spaces);
     }
 
     printf("=======================\n");
@@ -176,8 +202,9 @@ void downward_triangle_pattern_for_char(const char character, const size_t size)
         char* marks = generate_n_chars(character, size - i);
         if (marks) {
             printf("%s\n", marks);
-            free(marks);
         }
+
+        cleanup_chars(marks);
     }
 
     printf("=============================\n");
@@ -201,8 +228,9 @@ void hollow_triangle_pattern_for_char(const char character, const size_t size) {
         char* spaces = generate_n_chars(space, space_count);
         if (spaces) {
             printf("%c%s%c\n", character, spaces, right_boundary);
-            free(spaces);
         }
+
+        cleanup_chars(spaces);
     }
 
     printf("=============================\n");
@@ -224,13 +252,8 @@ void pyramid_pattern_for_char(const char character, const size_t size) {
             printf("%s%s\n", spaces, marks);
         }
 
-        if (spaces) {
-            free(spaces);
-        }
-
-        if (marks) {
-            free(marks);
-        }
+        cleanup_chars(spaces);
+        cleanup_chars(marks);
     }
 
     printf("====================\n");
@@ -257,13 +280,8 @@ void diamond_pattern_for_char(const char character, const size_t size) {
             printf("%s%s\n", spaces, marks);
         }
 
-        if (spaces) {
-            free(spaces);
-        }
-
-        if (marks) {
-            free(marks);
-        }
+        cleanup_chars(spaces);
+        cleanup_chars(marks);
     }
 
     printf("=================================\n");
@@ -292,13 +310,8 @@ void hollow_diamond_pattern_for_char(const char character, const size_t size) {
             printf("%s%c%s%c\n", spaces, character, inner_spaces, right_boundary);
         }
 
-        if (spaces) {
-            free(spaces);
-        }
-
-        if (inner_spaces) {
-            free(inner_spaces);
-        }
+        cleanup_chars(spaces);
+        cleanup_chars(inner_spaces);
     }
     printf("=================================\n");
 }
