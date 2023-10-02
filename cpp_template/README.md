@@ -1,7 +1,7 @@
 # Instructions
 
 ```
-g++ main.c
+clang++ main.c
 ./a.out
 ```
 
