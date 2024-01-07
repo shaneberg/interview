@@ -1,0 +1,6 @@
+# Instructions
+
+```
+node index.js
+```
+
