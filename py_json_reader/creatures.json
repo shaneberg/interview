@@ -1,0 +1,6 @@
+[
+    {"name": "Buzzle", "price": 19.99, "in_stock": true},
+    {"name": "Crud", "price": 29.99, "in_stock": false},
+    {"name": "Phil", "price": 15.99, "in_stock": true},
+    {"name": "Duck", "price": 9.99, "in_stock": true}
+]
