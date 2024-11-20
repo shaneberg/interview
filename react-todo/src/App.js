@@ -25,7 +25,7 @@ function App() {
         setTodo('');
     };
 
-    const setComplete = (id, complete) => setList((prevList) => prevList.map((item) => { 
+    const setComplete = (id, complete) => setList((prevList) => prevList.map((item) => {
         return { ...item, completed: id === item.id ? complete : item.completed };
     }));
 
@@ -36,9 +36,9 @@ function App() {
                 <div className="todo-list">
                     <h3>TODO</h3>
                     {list.map((item, iter) => (<TodoItem key={iter} item={item} />))}
-                    <input 
-                        value={todo} 
-                        onChange={(e) => setTodo(e.target.value)} 
+                    <input
+                        value={todo}
+                        onChange={(e) => setTodo(e.target.value)}
                         onKeyDown={(e) => { if (e.key === "Enter" && e.target.value) { addTodo() }}}
                     />
                     <button onClick={addTodo}>Add</button>
